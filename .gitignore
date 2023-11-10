@@ -1,0 +1,5 @@
+# Dependencies
+/node_modules
+
+# Local MongoDB data directory
+/mongodb-data

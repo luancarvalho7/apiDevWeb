@@ -25,11 +25,11 @@ export const getPetById = async (req: Request, res: Response) => {
 
 export const createPet = async (req: Request, res: Response) => {
   const pet = new Pet({
-    // ...req.body // Spread the body data into the new pet object
     name: req.body.name,
     age: req.body.age,
-    type: req.body.type,
-    // Add other pet attributes here
+    breed: req.body.breed, 
+    ownerName: req.body.ownerName,
+    // Você precisa incluir 'healthRecords' aqui se for obrigatório
   });
 
   try {
@@ -39,6 +39,7 @@ export const createPet = async (req: Request, res: Response) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 export const updatePet = async (req: Request, res: Response) => {
   try {

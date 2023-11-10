@@ -1,21 +1,26 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import petRoutes from './routes/petRoutes';
+import cors from 'cors';
+
+import petRoutes from './routes/petRoutes'; // Certifique-se de que o caminho esteja correto
 
 const mongoDB = 'mongodb://localhost:27017/petDataBase';
 
-// Connect without useNewUrlParser and useUnifiedTopology
+// Conecte-se ao MongoDB (as opções useNewUrlParser e useUnifiedTopology são padrão agora)
 mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise; // Esta linha é desnecessária se você estiver usando Promises ES6 globalmente
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+}));
+// Body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/pets', petRoutes);
 
